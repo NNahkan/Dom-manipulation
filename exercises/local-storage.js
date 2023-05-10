@@ -38,3 +38,48 @@
  */
 
 // Your code goes here...
+
+const mainClass = ".cardsContainer";
+const card = ".card";
+
+const mainContainer = document.querySelector(mainClass);
+const cards = document.querySelectorAll(card);
+
+!localStorage.getItem("favs") && localStorage.setItem("favs", 1);
+
+const makeFavsRed = ( ) => {
+  let storage = localStorage.getItem("favs");
+   for (const card of cards) {
+    if (storage.includes(card.id)) {
+      card.style.backgroundColor = "red";
+    } else {
+      card.style.backgroundColor = "transparent";
+    }
+  }
+};
+
+const addItemToLocal = (id, storage) => {
+  storage += storage.length ? `,${id}` : id;
+  localStorage.setItem("favs", storage);
+};
+
+const removeItem = (id, storage) => {
+  const storageArr = storage.split(",");
+  storageArr.splice(storageArr.indexOf(id), 1).join(",");
+  localStorage.setItem("favs", storageArr);
+};
+
+mainContainer.addEventListener("click", (e) => {
+  let storage = localStorage.getItem("favs");
+  const card = e.target;
+  if (Array.from(card.classList).includes("card")) {
+    if (!storage.includes(card.id)) {
+      addItemToLocal(card.id, storage);
+    } else {
+      removeItem(card.id, storage);
+    }
+  }
+  makeFavsRed();
+});
+
+makeFavsRed();

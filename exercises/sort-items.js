@@ -1,8 +1,8 @@
 /**
  * SORTING NODES WITHIN A CONTAINER
  * Please, make sure to read the following files in the exercises-info folder before you start
- * * "02 SortingNode.md" 
-*/
+ * * "02 SortingNode.md"
+ */
 
 /**
  * @task
@@ -13,7 +13,9 @@
 
 // Your code goes here...
 
-
+const itemFilter = ".item";
+const allItems = document.querySelectorAll(itemFilter);
+console.log(allItems);
 
 /**
  * @task
@@ -24,7 +26,9 @@
 
 // Your code goes here...
 
-
+const sortBtn = ".sortBtn";
+const sortButtons = document.querySelectorAll(sortBtn);
+console.log(sortButtons);
 
 /**
  * @task
@@ -39,7 +43,22 @@
 
 // Your code goes here...
 
+function sortData(direction) {
+  const mainContainer = document.getElementById("main");
+  const newArr = Array.from(allItems);
 
+  newArr.sort((a, b) => {
+	if (a.innerHtml > b.innerHtml) return 1;
+	else if (a.innerHtml < b.innerHtml) return -1;
+	else return 0;
+  });
+  if (direction === "desc") newArr.reverse();
+
+
+  newArr.forEach((item) => {
+    mainContainer.append(item);
+  });
+ }
 
 /**
  * @task
@@ -51,4 +70,9 @@
 
 // Your code goes here...
 
-
+for (const btn of sortButtons) {
+  btn.addEventListener("click", (e) => {
+    const direction = e.target.dataset.sortdir;
+     sortData(direction);
+  });
+}
